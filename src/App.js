@@ -114,29 +114,67 @@ const App = () => {
     return selectedMatch?.matches?.match?.odds?.type || [];
   };
 
-  const getColumnNames = (type) => {
-    const names = new Set();
-    const bookmakers = Array.isArray(type.bookmaker) ? type.bookmaker : [type.bookmaker];
-    bookmakers.forEach(b => {
-      b?.odd?.forEach(o => names.add(o.name));
-    });
-    return Array.from(names);
-  };
+    const getColumnNames = (type) => {
+        const names = new Set();
 
-  const getRows = (type, columns) => {
-    const rows = [];
-    const bookmakers = Array.isArray(type.bookmaker) ? type.bookmaker : [type.bookmaker];
-    bookmakers.forEach((b, i) => {
-      const row = columns.map(col => {
-        const odd = b?.odd?.find(o => o.name === col);
-        return odd ? odd.value : '-';
-      });
-      rows.push(row);
-    });
-    return rows;
-  };
+        const bookmakers = Array.isArray(type.bookmaker) ? type.bookmaker : [type.bookmaker];
+        bookmakers.forEach(b => {
+            if (b.odd) {
+                b.odd.forEach(o => names.add(o.name));
+            } else if (b.handicap) {
+                const handicaps = Array.isArray(b.handicap) ? b.handicap : [b.handicap];
+                handicaps.forEach(h => {
+                    h.odd?.forEach(o => names.add(`${h.name} ${o.name}`));
+                });
+            } else if (b.total) {
+                const totals = Array.isArray(b.total) ? b.total : [b.total];
+                totals.forEach(t => {
+                    t.odd?.forEach(o => names.add(`${t.name} ${o.name}`));
+                });
+            }
+        });
 
-  const Section = ({ title, columns, rows }) => {
+        return Array.from(names);
+    };
+
+
+    const getRows = (type, columns) => {
+        const rows = [];
+        const bookmakers = Array.isArray(type.bookmaker) ? type.bookmaker : [type.bookmaker];
+
+        bookmakers.forEach(b => {
+            const row = columns.map(col => {
+                if (b.odd) {
+                    const found = b.odd.find(o => o.name === col);
+                    return found ? found.value : '-';
+                } else if (b.handicap) {
+                    const handicaps = Array.isArray(b.handicap) ? b.handicap : [b.handicap];
+                    for (let h of handicaps) {
+                        for (let o of h.odd || []) {
+                            if (`${h.name} ${o.name}` === col) return o.value;
+                        }
+                    }
+                    return '-';
+                } else if (b.total) {
+                    const totals = Array.isArray(b.total) ? b.total : [b.total];
+                    for (let t of totals) {
+                        for (let o of t.odd || []) {
+                            if (`${t.name} ${o.name}` === col) return o.value;
+                        }
+                    }
+                    return '-';
+                }
+                return '-';
+            });
+
+            rows.push(row);
+        });
+
+        return rows;
+    };
+
+
+    const Section = ({ title, columns, rows }) => {
     const [open, setOpen] = useState(true);
     return (
         <div style={{
