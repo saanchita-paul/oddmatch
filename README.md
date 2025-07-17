@@ -6,11 +6,11 @@ A simple React application that loads and displays football match odds from a lo
 
 ##  Features
 
-- ✅ **Load and parse odds data from `data.json`**
-- ✅ **Auto-generate table headers** using dynamic bookmaker and odd type values
-- ✅ **Search matches** by Match ID or team name
-- ✅ **Real-time search suggestions** while typing
-- ✅ **Display structured odds tables** for the selected match
+-  **Load and parse odds data from `data.json`**
+-  **Auto-generate table headers** using dynamic bookmaker and odd type values
+-  **Search matches** by Match ID or team name
+-  **Real-time search suggestions** while typing
+-  **Display structured odds tables** for the selected match
 
 ---
 
@@ -23,18 +23,29 @@ A simple React application that loads and displays football match odds from a lo
 
 ### Setup Steps
 
-```bash
+
 # 1. Clone the repository
+```bash
 git clone https://github.com/saanchita-paul/oddmatch.git
+````
 
 # 2. Navigate into the project directory
+```bash
 cd oddmatch
 
+```
+
 # 3. Install dependencies
+```bash
 npm install
 
+```
+
 # 4. Start the development server
+```bash
 npm start
+
+```
 
 
 ### Output
