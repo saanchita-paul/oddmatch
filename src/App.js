@@ -185,75 +185,93 @@ const App = () => {
   };
 
   return (
-      <div style={{ padding: '2rem', fontFamily: 'Arial', backgroundColor: '#090f1f', color: 'white', minHeight: '100vh' }}>
-        <h2 style={{ marginBottom: '1rem' }}>Match Odds Viewer</h2>
 
-        <input
-            type="text"
-            value={query}
-            onChange={handleSearch}
-            placeholder="Search by match ID or team"
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #444',
-              borderRadius: '5px',
-              marginBottom: '1rem',
+      <div style={{
+          padding: '2rem',
+          fontFamily: 'Arial',
+          backgroundColor: '#090f1f',
+          color: 'white',
+          minHeight: '100vh'
+      }}>
+          <h1 style={{
+              fontSize: '1.25rem',
+              textAlign: 'center',
+              padding: '1rem',
               backgroundColor: '#253044',
               color: 'white'
-            }}
-        />
+          }}>
+              Football Match Odds Table
+          </h1>
 
-        {suggestions.length > 0 && (
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              {suggestions.map((match, index) => (
-                  <li
-                      key={`${match.id}-${index}`}
-                      onClick={() => selectMatch(match)}
-                      style={{
-                        padding: '10px',
-                        cursor: 'pointer',
-                        borderBottom: '1px solid #444',
-                        backgroundColor: '#080f23',
-                        color: 'white'
-                      }}
-                  >
-                    {match.id} - {match?.matches?.match?.localteam?.name || 'Unknown'} vs {match?.matches?.match?.awayteam?.name || 'Unknown'}
-                  </li>
-              ))}
-            </ul>
-        )}
 
-        {selectedMatch && (
-            <>
-              <MatchHeader match={selectedMatch.matches.match} />
-              <div style={{ marginTop: '2rem' }}>
+          <h2 style={{marginBottom: '1rem'}}>Match Odds Viewer</h2>
 
-                {getTypes().map((type, i) => {
-                  const columns = getColumnNames(type);
-                  const rows = getRows(type, columns);
-                  return (
-                      <Section
-                          key={i}
-                          title={type.value}
-                          columns={columns}
-                          rows={rows}
-                      />
-                  );
-                })}
-              </div>
-            </>
-        )}
+          <input
+              type="text"
+              value={query}
+              onChange={handleSearch}
+              placeholder="Search by match ID or team"
+              style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '1px solid #444',
+                  borderRadius: '5px',
+                  marginBottom: '1rem',
+                  backgroundColor: '#253044',
+                  color: 'white'
+              }}
+          />
+
+          {suggestions.length > 0 && (
+              <ul style={{listStyle: 'none', padding: 0}}>
+                  {suggestions.map((match, index) => (
+                      <li
+                          key={`${match.id}-${index}`}
+                          onClick={() => selectMatch(match)}
+                          style={{
+                              padding: '10px',
+                              cursor: 'pointer',
+                              borderBottom: '1px solid #444',
+                              backgroundColor: '#080f23',
+                              color: 'white'
+                          }}
+                      >
+                          {match.id} - {match?.matches?.match?.localteam?.name || 'Unknown'} vs {match?.matches?.match?.awayteam?.name || 'Unknown'}
+                      </li>
+                  ))}
+              </ul>
+          )}
+
+          {selectedMatch && (
+              <>
+                  <MatchHeader match={selectedMatch.matches.match}/>
+                  <div style={{marginTop: '2rem'}}>
+
+                      {getTypes().map((type, i) => {
+                          const columns = getColumnNames(type);
+                          const rows = getRows(type, columns);
+                          return (
+                              <Section
+                                  key={i}
+                                  title={type.value}
+                                  columns={columns}
+                                  rows={rows}
+                              />
+                          );
+                      })}
+                  </div>
+              </>
+          )}
       </div>
   );
 };
 
 const thStyle = {
-  padding: '10px',
-  borderBottom: '2px solid #000',
-  backgroundColor: '#253044',
-  color: '#f0f0f0',
-  fontWeight: 'bold'
+    padding: '10px',
+    borderBottom: '2px solid #000',
+    backgroundColor: '#253044',
+    color: '#f0f0f0',
+    fontWeight: 'bold'
 };
 
 const tdStyle = {
