@@ -198,8 +198,15 @@ const App = () => {
           >
             ★ {title}
           </div>
-          {open && (
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
+            {open && (
+                <div style={{ overflowX: 'auto' }}>
+                    <table style={{
+                        minWidth: '1000px',
+                        width: '100%',
+                        borderCollapse: 'collapse',
+                        textAlign: 'center',
+                        whiteSpace: 'nowrap'
+                    }}>
                 <thead>
                 <tr style={{ backgroundColor: '#080f23' }}>
                   {columns.map((col, i) => (
@@ -217,6 +224,7 @@ const App = () => {
                 ))}
                 </tbody>
               </table>
+            </div>
           )}
         </div>
     );
